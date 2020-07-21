@@ -3,13 +3,13 @@ package br.com.wb.salvaumavida.models
 import java.util.*
 
 data class Campaign (
-        val id: Int,
-        val title: String,
-        val item: String,
-        val goal: Int,
-        val progress: Float,
-        val limitDate: Date,
-        val creator: User
+        var id: Int,
+        var title: String,
+        var item: String,
+        var goal: Int,
+        var progress: Float,
+        var limitDate: Date,
+        var creator: User
 ){
 
 }

@@ -1,13 +1,13 @@
 package br.com.wb.salvaumavida.models
 
 data class User (
-        val id: Int,
-        val name: String,
-        val email: String,
-        val detail: String,
-        val address: String,
-        val addressLatitude: Double,
-        val addressLongitude: Double,
-        val type: UserType
+        var id: Int?,
+        var name: String,
+        var email: String,
+        var detail: String,
+        var address: String,
+        var addressLatitude: Double,
+        var addressLongitude: Double,
+        var type: UserType
 ){
 }
