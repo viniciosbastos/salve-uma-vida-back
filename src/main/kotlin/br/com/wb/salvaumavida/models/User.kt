@@ -6,8 +6,8 @@ data class User (
         val email: String,
         val detail: String,
         val address: String,
-        val addressLatitude: Float,
-        val addressLongitude: Float,
+        val addressLatitude: Double,
+        val addressLongitude: Double,
         val type: UserType
 ){
 }

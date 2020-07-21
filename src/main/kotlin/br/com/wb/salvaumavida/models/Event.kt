@@ -4,8 +4,8 @@ data class Event (
         val id: Int,
         val title: String,
         val address: String,
-        val addressLatitude: Float,
-        val addressLongitude: Float,
+        val addressLatitude: Double,
+        val addressLongitude: Double,
         val participants: Int,
         val creator: User
 ){
