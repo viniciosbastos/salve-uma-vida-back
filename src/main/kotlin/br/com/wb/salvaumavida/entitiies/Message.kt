@@ -1,4 +1,4 @@
-package br.com.wb.salvaumavida.models
+package br.com.wb.salvaumavida.entitiies
 
 import java.util.Date
 

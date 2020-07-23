@@ -1,7 +1,8 @@
 package br.com.wb.salvaumavida.resources
 
-import br.com.wb.salvaumavida.models.User
-import br.com.wb.salvaumavida.models.UserType
+import br.com.wb.salvaumavida.entitiies.User
+import br.com.wb.salvaumavida.exceptions.NotFoundException
+import br.com.wb.salvaumavida.models.Response
 import br.com.wb.salvaumavida.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -13,14 +14,12 @@ class UserResource (
 ){
 
     @GetMapping("/user/{id}")
-    fun getUser(@PathVariable id: Int): Any {
-        var result: Any
-        try {
-            result = userService.find(id)
-        } catch (ex: RuntimeException) {
-            result = ex.message!!
+    fun getUser(@PathVariable id: Int): Response {
+        return try {
+            Response.Success(userService.find(id))
+        } catch (ex: NotFoundException) {
+            Response.Error(ex.message!!, ex.cause.toString())
         }
-        return result
     }
 
     @PostMapping("/user")

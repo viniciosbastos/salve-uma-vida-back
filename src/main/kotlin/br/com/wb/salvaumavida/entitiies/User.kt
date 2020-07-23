@@ -1,4 +1,4 @@
-package br.com.wb.salvaumavida.models
+package br.com.wb.salvaumavida.entitiies
 
 import javax.persistence.*
 
@@ -14,7 +14,11 @@ data class User (
         var addressLatitude: Double,
         var addressLongitude: Double,
         @Enumerated(EnumType.STRING)
-        var type: UserType
+        var type: UserType,
+
+        @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+        var campaigns: List<Campaign>?
+
 ){
 
 }
