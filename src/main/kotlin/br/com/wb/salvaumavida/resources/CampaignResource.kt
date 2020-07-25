@@ -6,6 +6,7 @@ import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
 import br.com.wb.salvaumavida.services.CampaignService
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RestController
 class CampaignResource (private val service: CampaignService){
@@ -20,19 +21,21 @@ class CampaignResource (private val service: CampaignService){
     }
 
     @PostMapping("/campaign")
-    fun addCampaign(@RequestBody campaign: CampaignDTO): Response {
-        service.saveCampaign(campaign)
+    fun addCampaign(@RequestBody campaign: CampaignDTO, principal: Principal): Response {
+        service.saveCampaign(campaign, principal.name)
         return Response.Success(campaign)
 
     }
 
-    @PutMapping("/campaign")
-    fun updateCampaign(@RequestBody campaign: CampaignDTO) {
-        service.saveCampaign(campaign)
+    @PutMapping("/campaign/{id}")
+    fun updateCampaign(@RequestBody campaign: CampaignDTO, @PathVariable id: Int): Response {
+        service.updateCampaign(id, campaign)
+        return Response.Success("Campanha atualizada.")
     }
 
     @DeleteMapping("/campaign/{id}")
-    fun deleteCampaign(@PathVariable id: Int) {
+    fun deleteCampaign(@PathVariable id: Int): Response {
         service.deleteCampaign(id)
+        return Response.Success("Campanha excluída.")
     }
 }

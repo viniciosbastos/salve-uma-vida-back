@@ -24,8 +24,8 @@ class CampaignService (
     }
 
     @Transactional
-    fun saveCampaign(campaignDto: CampaignDTO) {
-        val user = userService.find(1)
+    fun saveCampaign(campaignDto: CampaignDTO, username: String) {
+        val user = userService.find(username)
         val campaign = Campaign(
                 title = campaignDto.title,
                 limitDate = campaignDto.limitDate,
@@ -34,21 +34,27 @@ class CampaignService (
                 id = null
         )
         repository.save(campaign)
-        campaignDto.items.forEach {
-            val item = CampaignItem(
-                    id = null,
-                    description = it.description,
-                    goal = it.goal,
-                    progress = it.progress,
-                    campaign = campaign,
-                    unit = it.unit
-            )
-            campaignItemService.save(item)
-        }
-
+        campaignItemService.saveAll(campaignDto.items.map{ CampaignItem(
+                id = null,
+                description = it.description,
+                goal = it.goal,
+                progress = it.progress,
+                campaign = campaign,
+                unit = it.unit
+        )})
     }
 
     fun deleteCampaign(id: Int) {
         repository.deleteById(id)
+    }
+
+    fun updateCampaign(id: Int, dto: CampaignDTO) {
+        val campaign = findCampaign(id)
+        campaign.apply {
+            title = dto.title
+            items = dto.items.map{ CampaignItem(it.id, it.description, it.goal, it.progress, campaign, it.unit) }
+            limitDate = dto.limitDate
+        }
+        repository.save(campaign)
     }
 }

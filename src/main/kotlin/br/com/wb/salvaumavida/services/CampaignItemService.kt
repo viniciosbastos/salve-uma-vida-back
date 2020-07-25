@@ -12,4 +12,8 @@ class CampaignItemService (
     fun save(item: CampaignItem) {
         repository.save(item)
     }
+
+    fun saveAll(items: List<CampaignItem>) {
+        repository.saveAll(items)
+    }
 }

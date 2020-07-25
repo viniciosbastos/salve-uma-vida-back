@@ -45,11 +45,13 @@ class WebSecurityConfig (
     @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity
-                .csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate", "/signup").permitAll()
+                .authorizeRequests().antMatchers("/authenticate", "/signup", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+        httpSecurity.csrf().disable()
+                .headers().frameOptions().disable()
+
     }
 }
