@@ -16,7 +16,7 @@ class CampaignResource (private val service: CampaignService){
     @GetMapping("/campaign/{id}")
     fun getCampaign(@PathVariable id: Int): Response {
         return try {
-            Response.Success(service.findCampaign(id))
+            Response.Success(service.findCampaign(id).mapToDTO())
         } catch (exception: NotFoundException) {
             Response.Error(exception.message.toString(), exception.cause.toString())
         }
@@ -34,7 +34,7 @@ class CampaignResource (private val service: CampaignService){
     @PostMapping("/campaign")
     fun addCampaign(@RequestBody campaign: CampaignDTO, principal: Principal): Response {
         service.saveCampaign(campaign, principal.name)
-        return Response.Success(campaign)
+        return Response.Success("Campanha ${campaign.title} salva com sucesso.")
 
     }
 
