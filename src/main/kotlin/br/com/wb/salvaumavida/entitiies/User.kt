@@ -1,5 +1,6 @@
 package br.com.wb.salvaumavida.entitiies
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -9,6 +10,7 @@ data class User (
         var id: Int?,
         var name: String,
         var email: String,
+        var password: String,
         var detail: String,
         var address: String,
         var addressLatitude: Double,

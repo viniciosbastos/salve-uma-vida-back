@@ -1,5 +1,6 @@
 package br.com.wb.salvaumavida.resources
 
+import br.com.wb.salvaumavida.dto.response.NewUserResponse
 import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
@@ -22,10 +23,10 @@ class UserResource (
         }
     }
 
-    @PostMapping("/user")
-    fun newUser(@RequestBody user: User): User {
-        userService.saveUser(user)
-        return user
+    @PostMapping("/signup")
+    fun newUser(@RequestBody user: User): Response {
+        val savedUser = userService.saveUser(user)
+        return Response.Success(NewUserResponse(savedUser.email, savedUser.type))
     }
 
     @PutMapping("/user")
