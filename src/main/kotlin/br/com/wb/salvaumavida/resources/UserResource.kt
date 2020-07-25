@@ -1,9 +1,13 @@
 package br.com.wb.salvaumavida.resources
 
+import br.com.wb.salvaumavida.dto.CampaignDTO
+import br.com.wb.salvaumavida.dto.CampaignItemDTO
 import br.com.wb.salvaumavida.dto.response.NewUserResponse
 import br.com.wb.salvaumavida.entitiies.User
+import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
+import br.com.wb.salvaumavida.services.CampaignService
 import br.com.wb.salvaumavida.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -11,7 +15,8 @@ import java.lang.RuntimeException
 
 @RestController
 class UserResource (
-        @Autowired private val userService: UserService
+        private val userService: UserService,
+        private val campaignService: CampaignService
 ){
 
     @GetMapping("/user/{id}")
@@ -39,5 +44,14 @@ class UserResource (
     fun deleteUser(@PathVariable id: Int): String {
         userService.deleteUser(id)
         return "deleted"
+    }
+
+    @GetMapping("/user/{id}/campaigns")
+    fun getUserCampaigns(@PathVariable id: Int): Response {
+        return try {
+            Response.Success(campaignService.findUserCampaigns(id).map { it.mapToDTO() })
+        } catch (exception: NotFoundException) {
+            Response.Error(exception.message!!, exception.cause.toString())
+        }
     }
 }

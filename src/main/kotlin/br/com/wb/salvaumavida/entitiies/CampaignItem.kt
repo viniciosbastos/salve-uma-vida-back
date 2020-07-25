@@ -1,5 +1,6 @@
 package br.com.wb.salvaumavida.entitiies
 
+import br.com.wb.salvaumavida.dto.CampaignItemDTO
 import javax.persistence.*
 
 @Entity
@@ -16,3 +17,11 @@ data class CampaignItem (
         var unit: UnitType
 ){
 }
+
+fun CampaignItem.mapToDTO(): CampaignItemDTO = CampaignItemDTO(
+        id = this.id,
+        description = this.description,
+        goal = this.goal,
+        progress = this.progress,
+        unit = this.unit
+)

@@ -1,7 +1,9 @@
 package br.com.wb.salvaumavida.resources
 
 import br.com.wb.salvaumavida.dto.CampaignDTO
+import br.com.wb.salvaumavida.dto.CampaignItemDTO
 import br.com.wb.salvaumavida.entitiies.Campaign
+import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
 import br.com.wb.salvaumavida.services.CampaignService
@@ -17,6 +19,15 @@ class CampaignResource (private val service: CampaignService){
             Response.Success(service.findCampaign(id))
         } catch (exception: NotFoundException) {
             Response.Error(exception.message.toString(), exception.cause.toString())
+        }
+    }
+
+    @GetMapping("/campaigns")
+    fun getCampaigns(principal: Principal): Response {
+        return try {
+            Response.Success(service.findUserCampaigns(principal.name).map { it.mapToDTO() })
+        } catch (exception: NotFoundException) {
+            Response.Error(exception.message!!, exception.cause.toString())
         }
     }
 

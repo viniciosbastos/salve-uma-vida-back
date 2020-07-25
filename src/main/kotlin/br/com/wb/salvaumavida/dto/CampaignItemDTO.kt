@@ -8,7 +8,6 @@ data class CampaignItemDTO (
         var description: String,
         var goal: Float,
         var progress: Float,
-        var campaign: Int?,
         var unit: UnitType
 ){
 

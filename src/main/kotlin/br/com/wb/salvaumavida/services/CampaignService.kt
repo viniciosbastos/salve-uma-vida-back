@@ -3,6 +3,7 @@ package br.com.wb.salvaumavida.services
 import br.com.wb.salvaumavida.dto.CampaignDTO
 import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
+import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
@@ -20,7 +21,16 @@ class CampaignService (
     }
 
     fun findUserCampaigns(userId: Int): List<Campaign> {
-        return repository.findByUserId(userId)
+        return repository
+                .findByUserId(userId)
+                .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
+    }
+
+    fun findUserCampaigns(username: String): List<Campaign> {
+        val user = userService.find(username)
+        return repository
+                .findByUserId(user.id!!)
+                .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
     }
 
     @Transactional

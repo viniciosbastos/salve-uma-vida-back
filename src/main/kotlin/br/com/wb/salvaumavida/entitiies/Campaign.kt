@@ -1,5 +1,7 @@
 package br.com.wb.salvaumavida.entitiies
 
+import br.com.wb.salvaumavida.dto.CampaignDTO
+import br.com.wb.salvaumavida.dto.CampaignItemDTO
 import java.util.Date
 import javax.persistence.*
 
@@ -17,3 +19,10 @@ data class Campaign (
 ){
 
 }
+
+fun Campaign.mapToDTO(): CampaignDTO = CampaignDTO(
+        id = this.id,
+        title = this.title,
+        limitDate = this.limitDate,
+        items = this.items.map { it.mapToDTO() }
+)
