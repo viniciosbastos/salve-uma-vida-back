@@ -1,5 +1,6 @@
 package br.com.wb.salvaumavida.entitiies
 
+import br.com.wb.salvaumavida.dto.EventDTO
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -19,3 +20,11 @@ data class Event (
         var user: User? = null
 ){
 }
+
+fun Event.mapToDTO(): EventDTO = EventDTO(
+        id = this.id,
+        title = this.title,
+        address = this.address,
+        addressLatitude = this.addressLatitude,
+        addressLongitude = this.addressLongitude
+)

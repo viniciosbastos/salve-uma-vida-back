@@ -4,6 +4,7 @@ import br.com.wb.salvaumavida.config.JwtTokenUtil
 import br.com.wb.salvaumavida.dto.AuthenticationDTO
 import br.com.wb.salvaumavida.dto.JwtDTO
 import br.com.wb.salvaumavida.models.Response
+import br.com.wb.salvaumavida.repositories.UserRepository
 import br.com.wb.salvaumavida.services.JwtUserDetailsService
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController
 class AuthenticationResource (
         private val authenticationManager: AuthenticationManager,
         private val jwtTokenUtil: JwtTokenUtil,
-        private val userDetailsService: JwtUserDetailsService
+        private val userDetailsService: JwtUserDetailsService,
+        private val userRepository: UserRepository
 ){
 
     @PostMapping("/authenticate")
@@ -29,7 +31,8 @@ class AuthenticationResource (
                             authentication.password)
                     )
             val userDetails = userDetailsService.loadUserByUsername(authentication.username)
-            Response.Success(JwtDTO(jwtTokenUtil.generateToken(userDetails)))
+            val user = userRepository.findByEmail(authentication.username)
+            Response.Success(JwtDTO(jwtTokenUtil.generateToken(userDetails), user.get().type))
         } catch (ex: BadCredentialsException) {
             Response.Error("Nenhum usuário encontrado com as credenciais informadas.", ex.cause.toString())
         } catch (ex: DisabledException) {

@@ -12,7 +12,7 @@ data class EventDTO (
 }
 
 fun EventDTO.mapToEntity(): Event = Event(
-        id = null,
+        id = this.id,
         title = this.title,
         address = this.address,
         addressLatitude = this.addressLatitude,
