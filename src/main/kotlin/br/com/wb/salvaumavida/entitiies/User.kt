@@ -3,6 +3,7 @@ package br.com.wb.salvaumavida.entitiies
 import javax.persistence.*
 
 @Entity
+@Table(name = "suv_user")
 data class User (
         @Id
         @GeneratedValue
