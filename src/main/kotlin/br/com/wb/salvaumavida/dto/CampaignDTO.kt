@@ -7,6 +7,7 @@ data class CampaignDTO (
         var id: Int?,
         var title: String,
         var items: List<CampaignItemDTO>,
-        var limitDate: Date
+        var limitDate: Date,
+        var description: String
 ){
 }

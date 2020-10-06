@@ -14,6 +14,7 @@ data class Campaign (
         @OneToMany(mappedBy = "campaign", cascade = [CascadeType.ALL])
         var items: List<CampaignItem>,
         var limitDate: Date,
+        var description: String,
         @ManyToOne
         var user: User
 ){
@@ -24,5 +25,6 @@ fun Campaign.mapToDTO(): CampaignDTO = CampaignDTO(
         id = this.id,
         title = this.title,
         limitDate = this.limitDate,
-        items = this.items.map { it.mapToDTO() }
+        items = this.items.map { it.mapToDTO() },
+        description = this.description
 )

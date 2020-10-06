@@ -17,6 +17,7 @@ data class User (
         var addressLongitude: Double?,
         @Enumerated(EnumType.STRING)
         var type: UserType,
+        var image: String,
 
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
         var campaigns: List<Campaign>?,

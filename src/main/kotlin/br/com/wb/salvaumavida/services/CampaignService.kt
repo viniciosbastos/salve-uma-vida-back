@@ -3,6 +3,7 @@ package br.com.wb.salvaumavida.services
 import br.com.wb.salvaumavida.dto.CampaignDTO
 import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
+import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
 import org.springframework.stereotype.Service
@@ -41,7 +42,8 @@ class CampaignService (
                 limitDate = campaignDto.limitDate,
                 items = listOf(),
                 user = user,
-                id = null
+                id = null,
+                description = campaignDto.description
         )
         repository.save(campaign)
         campaignItemService.saveAll(campaignDto.items.map{ CampaignItem(
