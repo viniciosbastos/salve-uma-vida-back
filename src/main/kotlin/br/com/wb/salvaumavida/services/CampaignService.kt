@@ -3,7 +3,6 @@ package br.com.wb.salvaumavida.services
 import br.com.wb.salvaumavida.dto.CampaignDTO
 import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
-import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
 import org.springframework.stereotype.Service
@@ -68,5 +67,11 @@ class CampaignService (
             limitDate = dto.limitDate
         }
         repository.save(campaign)
+    }
+
+    fun searchCampaign(title: String, itemDescription: String): List<Campaign> {
+        return repository
+                .findCampaignsByFilter(title, itemDescription)
+                .orElseThrow { NotFoundException("Nenhuma campanmha encontrada") }
     }
 }

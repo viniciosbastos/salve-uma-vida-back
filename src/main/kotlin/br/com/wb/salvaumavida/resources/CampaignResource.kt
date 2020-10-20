@@ -1,8 +1,6 @@
 package br.com.wb.salvaumavida.resources
 
 import br.com.wb.salvaumavida.dto.CampaignDTO
-import br.com.wb.salvaumavida.dto.CampaignItemDTO
-import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
@@ -12,6 +10,18 @@ import java.security.Principal
 
 @RestController
 class CampaignResource (private val service: CampaignService){
+
+    @GetMapping("/campaign/search")
+    fun searchCampaign(
+            @RequestParam("title", defaultValue = "") title: String,
+            @RequestParam("item", defaultValue = "") itemDescription: String
+    ): Response {
+        return try {
+            Response.Success(service.searchCampaign(title, itemDescription).map { it.mapToDTO() })
+        } catch (exception: NotFoundException) {
+            Response.Error(exception.message.toString(), exception.cause.toString())
+        }
+    }
 
     @GetMapping("/campaign/{id}")
     fun getCampaign(@PathVariable id: Int): Response {
