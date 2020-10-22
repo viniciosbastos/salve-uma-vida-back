@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "suv_user")
 data class User (
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int?,
         var name: String,
         var email: String,

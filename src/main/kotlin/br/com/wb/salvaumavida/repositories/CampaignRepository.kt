@@ -11,7 +11,7 @@ interface CampaignRepository : JpaRepository<Campaign, Int>{
     fun findByUserId(userId: Int): Optional<List<Campaign>>
 
     @Query("select c from Campaign c " +
-            "inner join CampaignItem ci on ci.campaign = c where c.title like upper(concat('%',:title,'%')) and ci.description like upper(concat('%',:itemDescription,'%')) group by c")
+            "inner join CampaignItem ci on ci.campaign = c where upper(c.title) like upper(concat('%',:title,'%')) and upper(ci.description) like upper(concat('%',:itemDescription,'%')) group by c")
     fun findCampaignsByFilter(
             @Param("title") title: String,
             @Param("itemDescription") itemDescription: String): Optional<List<Campaign>>

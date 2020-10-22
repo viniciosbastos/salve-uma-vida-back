@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 data class Campaign (
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int?,
         var title: String,
         @OneToMany(mappedBy = "campaign", cascade = [CascadeType.ALL])

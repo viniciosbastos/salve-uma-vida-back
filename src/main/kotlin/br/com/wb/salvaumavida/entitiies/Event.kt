@@ -3,15 +3,12 @@ package br.com.wb.salvaumavida.entitiies
 import br.com.wb.salvaumavida.dto.EventDTO
 import br.com.wb.salvaumavida.dto.mapToEntity
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 data class Event (
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int?,
         var title: String,
         var address: String,

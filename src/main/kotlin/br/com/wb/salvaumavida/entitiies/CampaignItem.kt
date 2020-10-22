@@ -6,7 +6,7 @@ import javax.persistence.*
 @Entity
 data class CampaignItem (
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Int?,
         var description: String,
         var goal: Float,
