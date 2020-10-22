@@ -14,7 +14,7 @@ class CampaignResource (private val service: CampaignService){
     @GetMapping("/campaign/search")
     fun searchCampaign(
             @RequestParam("title", defaultValue = "") title: String,
-            @RequestParam("item", defaultValue = "") itemDescription: String
+            @RequestParam("itemDescription", defaultValue = "") itemDescription: String
     ): Response {
         return try {
             Response.Success(service.searchCampaign(title, itemDescription).map { it.mapToDTO() })
