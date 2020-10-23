@@ -33,9 +33,12 @@ class CampaignResource (private val service: CampaignService){
     }
 
     @GetMapping("/campaigns")
-    fun getCampaigns(principal: Principal): Response {
+    fun getCampaigns(principal: Principal,
+                     @RequestParam("title", defaultValue = "") title: String,
+                     @RequestParam("itemDescription", defaultValue = "") itemDescription: String
+    ): Response {
         return try {
-            Response.Success(service.findUserCampaigns(principal.name).map { it.mapToDTO() })
+            Response.Success(service.findUserCampaigns(principal.name, title, itemDescription).map { it.mapToDTO() })
         } catch (exception: NotFoundException) {
             Response.Error(exception.message!!, exception.cause.toString())
         }

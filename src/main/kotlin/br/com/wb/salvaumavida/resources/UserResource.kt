@@ -48,9 +48,12 @@ class UserResource (
     }
 
     @GetMapping("/user/{id}/campaigns")
-    fun getUserCampaigns(@PathVariable id: Int): Response {
+    fun getUserCampaigns(@PathVariable id: Int,
+                         @RequestParam("title", defaultValue = "") title: String,
+                         @RequestParam("itemDescription", defaultValue = "") itemDescription: String
+    ): Response {
         return try {
-            Response.Success(campaignService.findUserCampaigns(id).map { it.mapToDTO() })
+            Response.Success(campaignService.findUserCampaigns(id, title, itemDescription).map { it.mapToDTO() })
         } catch (exception: NotFoundException) {
             Response.Error(exception.message!!, exception.cause.toString())
         }

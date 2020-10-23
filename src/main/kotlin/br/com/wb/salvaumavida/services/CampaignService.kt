@@ -16,20 +16,20 @@ class CampaignService (
         private val campaignItemService: CampaignItemService
 ){
 
-    fun findCampaign(id: Int): Campaign {
+    fun findCampaign(id: Int, title: String = "", itemDescription: String = ""): Campaign {
         return repository.findById(id).orElseThrow { RuntimeException("não encontrado") }
     }
 
-    fun findUserCampaigns(userId: Int): List<Campaign> {
+    fun findUserCampaigns(userId: Int, title: String = "", itemDescription: String = ""): List<Campaign> {
         return repository
-                .findByUserId(userId)
+                .findUserCampaignsByFilter(userId, title, itemDescription)
                 .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
     }
 
-    fun findUserCampaigns(username: String): List<Campaign> {
+    fun findUserCampaigns(username: String, title: String, itemDescription: String): List<Campaign> {
         val user = userService.find(username)
         return repository
-                .findByUserId(user.id!!)
+                .findUserCampaignsByFilter(user.id!!, title, itemDescription)
                 .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
     }
 
