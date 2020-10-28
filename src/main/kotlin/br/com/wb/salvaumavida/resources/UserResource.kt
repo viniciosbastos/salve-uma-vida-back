@@ -2,6 +2,7 @@ package br.com.wb.salvaumavida.resources
 
 import br.com.wb.salvaumavida.dto.CampaignDTO
 import br.com.wb.salvaumavida.dto.CampaignItemDTO
+import br.com.wb.salvaumavida.dto.UserDTO
 import br.com.wb.salvaumavida.dto.response.NewUserResponse
 import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.entitiies.mapToDTO
@@ -29,13 +30,13 @@ class UserResource (
     }
 
     @PostMapping("/signup")
-    fun newUser(@RequestBody user: User): Response {
+    fun newUser(@RequestBody user: UserDTO): Response {
         val savedUser = userService.saveUser(user)
         return Response.Success(NewUserResponse(savedUser.email, savedUser.type))
     }
 
     @PutMapping("/user")
-    fun updateUser(@RequestBody user: User): User {
+    fun updateUser(@RequestBody user: UserDTO): UserDTO {
         userService.saveUser(user)
         return user
     }

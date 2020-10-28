@@ -1,5 +1,7 @@
 package br.com.wb.salvaumavida.services
 
+import br.com.wb.salvaumavida.dto.UserDTO
+import br.com.wb.salvaumavida.dto.mapToEntity
 import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.UserRepository
@@ -24,8 +26,9 @@ class UserService (
                 .orElseThrow { NotFoundException("Usário não foi encontrado") }
     }
 
-    fun saveUser(user: User): User {
-        user.password = passwordEncoder.encode(user.password)
+    fun saveUser(userDto: UserDTO): User {
+        val user = userDto.mapToEntity()
+        user.password = passwordEncoder.encode(userDto.password)
         return userRepository.save(user)
     }
 
