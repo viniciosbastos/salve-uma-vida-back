@@ -9,7 +9,10 @@ import java.util.*
 
 interface EventRepository : JpaRepository<Event, Int> {
 
-    fun findByTitle(title: String): Optional<List<Event>>
+    @Query("select e from Event e where upper(e.title) like upper(concat('%',:title,'%'))")
+    fun findByTitle(@Param("title") title: String): Optional<List<Event>>
+
+    @Query("select e from Event e where upper(e.description) like upper(concat('%',:description,'%'))")
     fun findByDescription(description: String): Optional<List<Event>>
 
 }
