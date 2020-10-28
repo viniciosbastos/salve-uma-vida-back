@@ -3,9 +3,9 @@ package br.com.wb.salvaumavida.services
 import br.com.wb.salvaumavida.dto.EventDTO
 import br.com.wb.salvaumavida.dto.mapToEntity
 import br.com.wb.salvaumavida.entitiies.Event
-import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.EventRepository
+import br.com.wb.salvaumavida.utils.ifNotPresent
 import org.springframework.stereotype.Service
 
 @Service
@@ -35,5 +35,12 @@ class EventService (
             addressLongitude = eventDto.addressLongitude
         }
         repository.save(event)
+    }
+
+    fun searchEvent(param: String): List<Event> {
+        return repository
+                .findByTitle(param)
+                .ifNotPresent(repository.findByDescription(param))
+                .orElseThrow { NotFoundException("Nenhum evento encontrado.") }
     }
 }
