@@ -5,6 +5,7 @@ import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
+import br.com.wb.salvaumavida.utils.ifNotPresent
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import javax.transaction.Transactional
@@ -69,9 +70,11 @@ class CampaignService (
         repository.save(campaign)
     }
 
-    fun searchCampaign(title: String, itemDescription: String): List<Campaign> {
+    fun searchCampaign(param: String): List<Campaign> {
         return repository
-                .findCampaignsByFilter(title, itemDescription)
-                .orElseThrow { NotFoundException("Nenhuma campanmha encontrada") }
+                .findCampaignsByTitle(param)
+                .ifNotPresent(repository.findCampaignsByDescription(param))
+                .ifNotPresent(repository.findCampaignsByItemDescription(param))
+                .orElseThrow { NotFoundException("Nenhuma campanha encontrada") }
     }
 }

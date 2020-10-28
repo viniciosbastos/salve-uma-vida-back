@@ -13,11 +13,10 @@ class CampaignResource (private val service: CampaignService){
 
     @GetMapping("/campaign/search")
     fun searchCampaign(
-            @RequestParam("title", defaultValue = "") title: String,
-            @RequestParam("item", defaultValue = "") itemDescription: String
+            @RequestParam("param", defaultValue = "") param: String
     ): Response {
         return try {
-            Response.Success(service.searchCampaign(title, itemDescription).map { it.mapToDTO() })
+            Response.Success(service.searchCampaign(param).map { it.mapToDTO() })
         } catch (exception: NotFoundException) {
             Response.Error(exception.message.toString(), exception.cause.toString())
         }

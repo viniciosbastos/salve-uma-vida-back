@@ -8,6 +8,6 @@ data class CampaignDTO (
         var items: List<CampaignItemDTO>,
         var limitDate: Date,
         var description: String,
-        var userImage: String
+        var userImage: String?
 ){
 }
