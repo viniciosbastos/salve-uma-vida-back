@@ -30,7 +30,7 @@ class UserResource (
     }
 
     @PostMapping("/signup")
-    fun newUser(@RequestBody user: User): Response {
+    fun newUser(@RequestBody user: UserDTO): Response {
         return try {
             val savedUser = userService.createUser(user)
             return Response.Success(NewUserResponse(savedUser.email, savedUser.type))

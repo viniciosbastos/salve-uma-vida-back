@@ -32,7 +32,7 @@ class UserService (
             throw EmailAlreadyInUseException("Já existe um usuário com esse endereço de email.")
     }
 
-    fun createUser(user: User): User {
+    fun createUser(user: UserDTO): User {
         verifyIfUserExists(user.email)
         return saveUser(user)
     }
