@@ -30,9 +30,13 @@ class UserResource (
     }
 
     @PostMapping("/signup")
-    fun newUser(@RequestBody user: UserDTO): Response {
-        val savedUser = userService.saveUser(user)
-        return Response.Success(NewUserResponse(savedUser.email, savedUser.type))
+    fun newUser(@RequestBody user: User): Response {
+        return try {
+            val savedUser = userService.createUser(user)
+            return Response.Success(NewUserResponse(savedUser.email, savedUser.type))
+        } catch (exception: Exception) {
+            Response.Error(exception.message!!, exception.cause.toString())
+        }
     }
 
     @PutMapping("/user")
