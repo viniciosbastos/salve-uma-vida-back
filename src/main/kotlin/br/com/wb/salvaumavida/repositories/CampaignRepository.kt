@@ -11,16 +11,23 @@ interface CampaignRepository : JpaRepository<Campaign, Int>{
     fun findByUserId(userId: Int): Optional<List<Campaign>>
 
     @Query("select c from Campaign c " +
-            "inner join CampaignItem ci on ci.campaign = c where upper(c.title) like upper(concat('%',:title,'%')) and upper(ci.description) like upper(concat('%',:itemDescription,'%')) group by c")
+            "inner join CampaignItem ci on ci.campaign = c " +
+            "where upper(ci.description) like upper(concat('%',:param,'%'))" +
+            " or upper(c.description) like upper(concat('%',:param,'%'))" +
+            " or upper(c.title) like upper(concat('%',:param,'%')) group by c")
     fun findCampaignsByFilter(
-            @Param("title") title: String,
-            @Param("itemDescription") itemDescription: String): Optional<List<Campaign>>
+            @Param("param") param: String
+    ): Optional<List<Campaign>>
 
     @Query("select c from Campaign c " +
-            "inner join CampaignItem ci on ci.campaign = c where upper(c.title) like upper(concat('%',:title,'%')) and upper(ci.description) like upper(concat('%',:itemDescription,'%')) and c.user.id = :id group by c")
+            "inner join CampaignItem ci on ci.campaign = c " +
+            "where c.user.id = :userId" +
+            " and (upper(ci.description) like upper(concat('%',:param,'%'))" +
+            " or upper(c.description) like upper(concat('%',:param,'%'))" +
+            " or upper(c.title) like upper(concat('%',:param,'%'))) group by c")
     fun findUserCampaignsByFilter(
-            @Param("id") id: Int,
-            @Param("title") title: String,
-            @Param("itemDescription") itemDescription: String): Optional<List<Campaign>>
+            @Param("userId") userId: Int,
+            @Param("param") param: String
+    ): Optional<List<Campaign>>
 
 }

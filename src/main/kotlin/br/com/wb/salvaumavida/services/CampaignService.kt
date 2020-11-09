@@ -5,6 +5,7 @@ import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
+import br.com.wb.salvaumavida.utils.ifNotPresent
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import javax.transaction.Transactional
@@ -20,16 +21,16 @@ class CampaignService (
         return repository.findById(id).orElseThrow { RuntimeException("não encontrado") }
     }
 
-    fun findUserCampaigns(userId: Int, title: String = "", itemDescription: String = ""): List<Campaign> {
+    fun findUserCampaigns(userId: Int, param: String): List<Campaign> {
         return repository
-                .findUserCampaignsByFilter(userId, title, itemDescription)
+                .findUserCampaignsByFilter(userId, param)
                 .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
     }
 
-    fun findUserCampaigns(username: String, title: String, itemDescription: String): List<Campaign> {
+    fun findUserCampaigns(username: String, param: String): List<Campaign> {
         val user = userService.find(username)
         return repository
-                .findUserCampaignsByFilter(user.id!!, title, itemDescription)
+                .findUserCampaignsByFilter(user.id!!, param)
                 .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
     }
 
@@ -69,9 +70,9 @@ class CampaignService (
         repository.save(campaign)
     }
 
-    fun searchCampaign(title: String, itemDescription: String): List<Campaign> {
+    fun searchCampaign(param: String): List<Campaign> {
         return repository
-                .findCampaignsByFilter(title, itemDescription)
-                .orElseThrow { NotFoundException("Nenhuma campanmha encontrada") }
+                .findCampaignsByFilter(param)
+                .orElseThrow { NotFoundException("Nenhuma campanha encontrada") }
     }
 }

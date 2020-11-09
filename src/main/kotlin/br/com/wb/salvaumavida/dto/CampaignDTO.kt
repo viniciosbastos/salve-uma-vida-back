@@ -1,6 +1,5 @@
 package br.com.wb.salvaumavida.dto
 
-import br.com.wb.salvaumavida.entitiies.UnitType
 import java.util.*
 
 data class CampaignDTO (
@@ -8,6 +7,7 @@ data class CampaignDTO (
         var title: String,
         var items: List<CampaignItemDTO>,
         var limitDate: Date,
-        var description: String
+        var description: String,
+        var userImage: String?
 ){
 }
