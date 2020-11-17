@@ -27,5 +27,6 @@ fun Campaign.mapToDTO(): CampaignDTO = CampaignDTO(
         limitDate = this.limitDate,
         items = this.items.map { it.mapToDTO() },
         description = this.description,
-        userImage = this.user.image
+        userImage = this.user.image,
+        userId = this.user.id
 )
