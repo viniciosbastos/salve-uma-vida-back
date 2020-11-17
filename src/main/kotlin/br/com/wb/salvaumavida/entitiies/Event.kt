@@ -31,5 +31,6 @@ fun Event.mapToDTO(): EventDTO = EventDTO(
         addressLongitude = this.addressLongitude,
         image = this.image,
         description = this.description,
-        date = this.date
+        date = this.date,
+        userId = user?.id
 )

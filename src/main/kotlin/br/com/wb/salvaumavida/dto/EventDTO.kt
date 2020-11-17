@@ -11,7 +11,8 @@ data class EventDTO (
         var addressLongitude: Double,
         var image: String,
         var description: String,
-        var date: Date
+        var date: Date,
+        var userId: Int?
 ){
 }
 
