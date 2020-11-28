@@ -3,16 +3,20 @@ package br.com.wb.salvaumavida.services
 import br.com.wb.salvaumavida.dto.UserDTO
 import br.com.wb.salvaumavida.dto.mapToEntity
 import br.com.wb.salvaumavida.entitiies.User
+import br.com.wb.salvaumavida.entitiies.UserFavoriteNGO
 import br.com.wb.salvaumavida.exceptions.EmailAlreadyInUseException
 import br.com.wb.salvaumavida.exceptions.NotFoundException
+import br.com.wb.salvaumavida.repositories.UserFavoriteNGORepository
 import br.com.wb.salvaumavida.repositories.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UserService (
         private val userRepository: UserRepository,
-        private val passwordEncoder: PasswordEncoder
+        private val passwordEncoder: PasswordEncoder,
+        private val userFavoriteNGORepository: UserFavoriteNGORepository
 ) {
 
     fun find(id: Int): User {
@@ -45,5 +49,15 @@ class UserService (
 
     fun deleteUser(id: Int) {
         userRepository.deleteById(id)
+    }
+
+    fun saveFavoriteNgo(username: String, ngoId: Int) {
+        val user = find(username)
+        val ngo = find(ngoId)
+        userFavoriteNGORepository.save(UserFavoriteNGO(
+                favoriteSince = Date(),
+                starred = ngo,
+                starredBy = user
+        ))
     }
 }

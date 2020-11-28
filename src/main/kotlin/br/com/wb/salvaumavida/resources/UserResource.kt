@@ -2,6 +2,7 @@ package br.com.wb.salvaumavida.resources
 
 import br.com.wb.salvaumavida.dto.CampaignDTO
 import br.com.wb.salvaumavida.dto.CampaignItemDTO
+import br.com.wb.salvaumavida.dto.FavoriteDTO
 import br.com.wb.salvaumavida.dto.UserDTO
 import br.com.wb.salvaumavida.dto.response.NewUserResponse
 import br.com.wb.salvaumavida.entitiies.User
@@ -13,6 +14,7 @@ import br.com.wb.salvaumavida.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.lang.RuntimeException
+import java.security.Principal
 
 @RestController
 class UserResource (
@@ -62,13 +64,18 @@ class UserResource (
         }
     }
 
-    @GetMapping("/user/favorites/")
+    @GetMapping("/user/favorites")
     fun getUserFavoriteNGOs(): Response {
         TODO("Not implemented")
     }
 
-    @PostMapping("/user/favorites/")
-    fun setNGOAsFavorite(): Response {
-        TODO("Not implemented")
+    @PostMapping("/user/favorites")
+    fun setNGOAsFavorite(@RequestBody ngo: FavoriteDTO, principal: Principal): Response {
+        return try {
+            userService.saveFavoriteNgo(principal.name, ngo.ngoId)
+            Response.Success("")
+        } catch(ex: Exception) {
+            Response.Error(ex.message!!, ex.cause.toString())
+        }
     }
 }
