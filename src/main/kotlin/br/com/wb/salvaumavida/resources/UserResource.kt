@@ -7,12 +7,14 @@ import br.com.wb.salvaumavida.dto.UserDTO
 import br.com.wb.salvaumavida.dto.response.NewUserResponse
 import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.entitiies.mapToDTO
+import br.com.wb.salvaumavida.entitiies.mapToFavoriteDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
 import br.com.wb.salvaumavida.services.CampaignService
 import br.com.wb.salvaumavida.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 import java.lang.RuntimeException
 import java.security.Principal
 
@@ -65,8 +67,12 @@ class UserResource (
     }
 
     @GetMapping("/user/favorites")
-    fun getUserFavoriteNGOs(): Response {
-        TODO("Not implemented")
+    fun getUserFavoriteNGOs(principal: Principal): Response {
+        return try {
+            Response.Success(userService.findUserFavoriteNgos(principal.name).map { it.mapToFavoriteDTO() })
+        } catch(ex: Exception) {
+            Response.Error(ex.message!!, ex.cause.toString())
+        }
     }
 
     @PostMapping("/user/favorites")

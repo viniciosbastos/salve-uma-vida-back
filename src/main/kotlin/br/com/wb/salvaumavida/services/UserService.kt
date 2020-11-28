@@ -60,4 +60,10 @@ class UserService (
                 starredBy = user
         ))
     }
+
+    fun findUserFavoriteNgos(name: String): List<UserFavoriteNGO> {
+        val user = find(name)
+        val favoriteNgos = userFavoriteNGORepository.findByStarredBy_Id(user.id!!)
+        return favoriteNgos
+    }
 }

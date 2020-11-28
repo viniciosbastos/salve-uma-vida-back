@@ -1,5 +1,6 @@
 package br.com.wb.salvaumavida.entitiies
 
+import br.com.wb.salvaumavida.dto.response.FavoriteResponseDTO
 import java.util.*
 import javax.persistence.*
 
@@ -15,6 +16,11 @@ data class UserFavoriteNGO (
         @ManyToOne
         var starredBy: User
 ){
+}
 
-
+fun UserFavoriteNGO.mapToFavoriteDTO(): FavoriteResponseDTO {
+        return FavoriteResponseDTO(
+                name = this.starred.name,
+                image = this.starred.image
+        )
 }
