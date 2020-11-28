@@ -62,8 +62,13 @@ class UserResource (
         }
     }
 
-    @PostMapping("/user/favorite/campaign")
-    fun setFavoriteCampaign(): Response {
+    @GetMapping("/user/favorites/")
+    fun getUserFavoriteNGOs(): Response {
+        TODO("Not implemented")
+    }
+
+    @PostMapping("/user/favorites/")
+    fun setNGOAsFavorite(): Response {
         TODO("Not implemented")
     }
 }
