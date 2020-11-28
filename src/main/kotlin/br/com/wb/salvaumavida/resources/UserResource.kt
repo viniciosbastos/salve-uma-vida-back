@@ -61,4 +61,9 @@ class UserResource (
             Response.Error(exception.message!!, exception.cause.toString())
         }
     }
+
+    @PostMapping("/user/favorite/campaign")
+    fun setFavoriteCampaign(): Response {
+        TODO("Not implemented")
+    }
 }
