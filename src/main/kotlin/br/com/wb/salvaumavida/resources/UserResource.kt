@@ -33,6 +33,15 @@ class UserResource (
         }
     }
 
+    @GetMapping("/user/profile")
+    fun getUserProfile(principal: Principal): Response {
+        return try {
+            Response.Success(userService.find(principal.name))
+        } catch (ex: NotFoundException) {
+            Response.Error(ex.message!!, ex.cause.toString())
+        }
+    }
+
     @PostMapping("/signup")
     fun newUser(@RequestBody user: UserDTO): Response {
         return try {
