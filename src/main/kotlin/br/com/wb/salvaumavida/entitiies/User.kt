@@ -1,5 +1,6 @@
 package br.com.wb.salvaumavida.entitiies
 
+import br.com.wb.salvaumavida.dto.UserDTO
 import javax.persistence.*
 
 @Entity
@@ -28,3 +29,15 @@ data class User (
 ){
 
 }
+
+fun User.mapToDto(): UserDTO = UserDTO (
+        name = this.name,
+        email = this.email,
+        password = this.password,
+        detail = this.detail,
+        address = this.address,
+        addressLatitude = this.addressLatitude,
+        addressLongitude = this.addressLongitude,
+        type = this.type,
+        image = this.image
+)

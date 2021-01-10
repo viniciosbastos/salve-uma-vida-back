@@ -7,6 +7,7 @@ import br.com.wb.salvaumavida.dto.UserDTO
 import br.com.wb.salvaumavida.dto.response.NewUserResponse
 import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.entitiies.mapToDTO
+import br.com.wb.salvaumavida.entitiies.mapToDto
 import br.com.wb.salvaumavida.entitiies.mapToFavoriteDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
@@ -36,7 +37,7 @@ class UserResource (
     @GetMapping("/user/profile")
     fun getUserProfile(principal: Principal): Response {
         return try {
-            Response.Success(userService.find(principal.name))
+            Response.Success(userService.find(principal.name).mapToDto())
         } catch (ex: NotFoundException) {
             Response.Error(ex.message!!, ex.cause.toString())
         }
