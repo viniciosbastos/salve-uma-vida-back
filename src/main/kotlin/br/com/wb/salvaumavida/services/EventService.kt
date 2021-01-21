@@ -32,6 +32,9 @@ class EventService (
             address = eventDto.address
             addressLatitude = eventDto.addressLatitude
             addressLongitude = eventDto.addressLongitude
+            description = eventDto.description
+            date = eventDto.date
+            image = eventDto.image
         }
         repository.save(event)
     }

@@ -28,7 +28,7 @@ class UserResource (
     @GetMapping("/user/{id}")
     fun getUser(@PathVariable id: Int): Response {
         return try {
-            Response.Success(userService.find(id))
+            Response.Success(userService.find(id).mapToDto())
         } catch (ex: NotFoundException) {
             Response.Error(ex.message!!, ex.cause.toString())
         }

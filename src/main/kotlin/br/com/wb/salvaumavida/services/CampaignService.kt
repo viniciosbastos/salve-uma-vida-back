@@ -60,12 +60,13 @@ class CampaignService (
         repository.deleteById(id)
     }
 
-    fun updateCampaign(id: Int, dto: CampaignDTO) {
-        val campaign = findCampaign(id)
+    fun updateCampaign(dto: CampaignDTO) {
+        val campaign = findCampaign(dto.id!!)
         campaign.apply {
             title = dto.title
             items = dto.items.map{ CampaignItem(it.id, it.description, it.goal, it.progress, campaign, it.unit) }
             limitDate = dto.limitDate
+            description = dto.description
         }
         repository.save(campaign)
     }

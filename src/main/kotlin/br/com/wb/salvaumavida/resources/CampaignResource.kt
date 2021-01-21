@@ -49,9 +49,9 @@ class CampaignResource (private val service: CampaignService){
 
     }
 
-    @PutMapping("/campaign/{id}")
-    fun updateCampaign(@RequestBody campaign: CampaignDTO, @PathVariable id: Int): Response {
-        service.updateCampaign(id, campaign)
+    @PutMapping("/campaign")
+    fun updateCampaign(@RequestBody campaign: CampaignDTO): Response {
+        service.updateCampaign(campaign)
         return Response.Success("Campanha atualizada.")
     }
 
