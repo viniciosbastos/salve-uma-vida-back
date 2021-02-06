@@ -89,9 +89,20 @@ class UserResource (
     fun setNGOAsFavorite(@RequestBody ngo: FavoriteDTO, principal: Principal): Response {
         return try {
             userService.saveFavoriteNgo(principal.name, ngo.ngoId)
-            Response.Success("")
+            Response.Success("ONG Favoritada.")
         } catch(ex: Exception) {
             Response.Error(ex.message!!, ex.cause.toString())
         }
     }
+
+    @DeleteMapping("/user/favorites")
+    fun unFavoriteNGO(@RequestBody ngo: FavoriteDTO, principal: Principal): Response {
+        return try {
+            userService.unFavoriteNgo(principal.name, ngo.ngoId)
+            Response.Success("ONG Desfavoritada.")
+        } catch(ex: Exception) {
+            Response.Error(ex.message!!, ex.cause.toString())
+        }
+    }
+
 }

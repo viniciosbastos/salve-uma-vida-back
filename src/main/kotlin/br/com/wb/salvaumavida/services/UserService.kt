@@ -61,6 +61,15 @@ class UserService (
         ))
     }
 
+    fun unFavoriteNgo(username: String, ngoId: Int){
+        val user = find(username)
+        val ngo = find(ngoId)
+        val favoriteNGO = userFavoriteNGORepository
+                .findByStarredBy_IdAndStarred_Id(user.id!!, ngo.id!!)
+                .orElseThrow { NotFoundException("ONG não favoritada pelo usuário.") }
+        userFavoriteNGORepository.delete(favoriteNGO)
+    }
+
     fun findUserFavoriteNgos(name: String): List<UserFavoriteNGO> {
         val user = find(name)
         val favoriteNgos = userFavoriteNGORepository.findByStarredBy_Id(user.id!!)
