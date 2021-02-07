@@ -51,4 +51,8 @@ class EventService (
                 .findLoggedUserEventsByFilter(user.id!!, param)
                 .orElseThrow { NotFoundException("Nenhum evento encontrado.") }
     }
+
+    fun deleteEvent(id: Int) {
+        repository.deleteById(id)
+    }
 }

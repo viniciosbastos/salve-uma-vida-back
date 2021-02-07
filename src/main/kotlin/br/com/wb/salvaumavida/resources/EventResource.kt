@@ -28,6 +28,12 @@ class EventResource (
         }
     }
 
+    @DeleteMapping("/event/{id}")
+    fun deleteEvent(@PathVariable id: Int): Response {
+        service.deleteEvent(id)
+        return Response.Success("Campanha excluída.")
+    }
+
     @PutMapping("/event")
     fun updateEvent(@RequestBody event: EventDTO): Response {
         return try {
