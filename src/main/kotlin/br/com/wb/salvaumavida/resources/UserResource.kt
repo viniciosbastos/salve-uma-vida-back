@@ -12,6 +12,7 @@ import br.com.wb.salvaumavida.entitiies.mapToFavoriteDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
 import br.com.wb.salvaumavida.services.CampaignService
+import br.com.wb.salvaumavida.services.EventService
 import br.com.wb.salvaumavida.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -22,7 +23,8 @@ import java.security.Principal
 @RestController
 class UserResource (
         private val userService: UserService,
-        private val campaignService: CampaignService
+        private val campaignService: CampaignService,
+        private val eventService: EventService
 ){
 
     @GetMapping("/user/{id}")
@@ -71,6 +73,17 @@ class UserResource (
     ): Response {
         return try {
             Response.Success(campaignService.findUserCampaigns(id, param).map { it.mapToDTO() })
+        } catch (exception: NotFoundException) {
+            Response.Error(exception.message!!, exception.cause.toString())
+        }
+    }
+
+    @GetMapping("/user/{id}/events")
+    fun getUserEvents(@PathVariable id: Int,
+                         @RequestParam("param", defaultValue = "") param: String
+    ): Response {
+        return try {
+            Response.Success(eventService.findUserEvents(id, param).map { it.mapToDTO() })
         } catch (exception: NotFoundException) {
             Response.Error(exception.message!!, exception.cause.toString())
         }

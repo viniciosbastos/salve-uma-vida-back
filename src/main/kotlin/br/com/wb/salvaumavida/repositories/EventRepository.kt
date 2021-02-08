@@ -18,4 +18,10 @@ interface EventRepository : JpaRepository<Event, Int> {
             @Param("param") param: String
     ): Optional<List<Event>>
 
+    @Query("select e from Event e " +
+            "where e.user.id = :userId" +
+            " and (upper(e.description) like upper(concat('%',:param,'%'))" +
+            " or upper(e.title) like upper(concat('%',:param,'%')))")
+    fun findUserEventsByFilter(userId: Int, param: String): Optional<List<Event>>
+
 }

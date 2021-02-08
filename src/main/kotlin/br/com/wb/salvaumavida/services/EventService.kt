@@ -55,4 +55,10 @@ class EventService (
     fun deleteEvent(id: Int) {
         repository.deleteById(id)
     }
+
+    fun findUserEvents(userId: Int, param: String): List<Event> {
+        return repository
+                .findUserEventsByFilter(userId, param)
+                .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
+    }
 }
