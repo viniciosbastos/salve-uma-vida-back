@@ -1,8 +1,10 @@
 package br.com.wb.salvaumavida.services
 
 import br.com.wb.salvaumavida.dto.EventDTO
+import br.com.wb.salvaumavida.dto.LocationDTO
 import br.com.wb.salvaumavida.dto.mapToEntity
 import br.com.wb.salvaumavida.entitiies.Event
+import br.com.wb.salvaumavida.entitiies.mapToLocationDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.EventRepository
 import org.springframework.stereotype.Service
@@ -60,5 +62,11 @@ class EventService (
         return repository
                 .findUserEventsByFilter(userId, param)
                 .orElseThrow{ NotFoundException("Nenhuma campanha encontrada.") }
+    }
+
+    fun findEventLocation(): List<LocationDTO> {
+        return repository
+                .findAll()
+                .map { it.mapToLocationDTO() }
     }
 }

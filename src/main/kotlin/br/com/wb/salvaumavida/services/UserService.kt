@@ -1,9 +1,11 @@
 package br.com.wb.salvaumavida.services
 
+import br.com.wb.salvaumavida.dto.LocationDTO
 import br.com.wb.salvaumavida.dto.UserDTO
 import br.com.wb.salvaumavida.dto.mapToEntity
 import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.entitiies.UserFavoriteNGO
+import br.com.wb.salvaumavida.entitiies.mapToLocationDto
 import br.com.wb.salvaumavida.exceptions.EmailAlreadyInUseException
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.UserFavoriteNGORepository
@@ -74,5 +76,12 @@ class UserService (
         val user = find(name)
         val favoriteNgos = userFavoriteNGORepository.findByStarredBy_Id(user.id!!)
         return favoriteNgos
+    }
+
+    fun findNGOLocations(): List<LocationDTO> {
+        val ngoLocations = userRepository
+                .findAll()
+                .map { it.mapToLocationDto() }
+        return ngoLocations
     }
 }

@@ -20,6 +20,7 @@ data class UserFavoriteNGO (
 
 fun UserFavoriteNGO.mapToFavoriteDTO(): FavoriteResponseDTO {
         return FavoriteResponseDTO(
+                id = this.starred.id!!,
                 name = this.starred.name,
                 image = this.starred.image
         )

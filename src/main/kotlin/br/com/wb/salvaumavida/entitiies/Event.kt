@@ -1,6 +1,8 @@
 package br.com.wb.salvaumavida.entitiies
 
 import br.com.wb.salvaumavida.dto.EventDTO
+import br.com.wb.salvaumavida.dto.LocationDTO
+import br.com.wb.salvaumavida.dto.LocationEnum
 import br.com.wb.salvaumavida.dto.mapToEntity
 import java.util.*
 import javax.persistence.*
@@ -33,4 +35,12 @@ fun Event.mapToDTO(): EventDTO = EventDTO(
         description = this.description,
         date = this.date,
         userId = user?.id
+)
+
+fun Event.mapToLocationDTO(): LocationDTO = LocationDTO(
+        type = LocationEnum.EVENT,
+        latitude = this.addressLatitude,
+        longitude = this.addressLongitude,
+        description = this.title,
+        id = this.id!!
 )

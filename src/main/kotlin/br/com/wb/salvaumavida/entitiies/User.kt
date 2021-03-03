@@ -1,5 +1,7 @@
 package br.com.wb.salvaumavida.entitiies
 
+import br.com.wb.salvaumavida.dto.LocationDTO
+import br.com.wb.salvaumavida.dto.LocationEnum
 import br.com.wb.salvaumavida.dto.UserDTO
 import javax.persistence.*
 
@@ -40,4 +42,12 @@ fun User.mapToDto(): UserDTO = UserDTO (
         addressLongitude = this.addressLongitude,
         type = this.type,
         image = this.image
+)
+
+fun User.mapToLocationDto(): LocationDTO = LocationDTO (
+        type = LocationEnum.NGO,
+        latitude = this.addressLatitude!!,
+        longitude = this.addressLongitude!!,
+        description = this.name,
+        id = this.id!!
 )
