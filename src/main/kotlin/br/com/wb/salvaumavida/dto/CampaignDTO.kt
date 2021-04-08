@@ -9,6 +9,7 @@ data class CampaignDTO (
         var limitDate: Date,
         var description: String,
         var userImage: String?,
-        var userId: Int?
+        var userId: Int?,
+        var open: Boolean
 ){
 }

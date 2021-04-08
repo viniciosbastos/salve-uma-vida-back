@@ -16,9 +16,9 @@ data class Campaign (
         var limitDate: Date,
         var description: String,
         @ManyToOne
-        var user: User
+        var user: User,
+        var open: Boolean = true
 ){
-
 }
 
 fun Campaign.mapToDTO(): CampaignDTO = CampaignDTO(
@@ -28,5 +28,11 @@ fun Campaign.mapToDTO(): CampaignDTO = CampaignDTO(
         items = this.items.map { it.mapToDTO() },
         description = this.description,
         userImage = this.user.image,
-        userId = this.user.id
+        userId = this.user.id,
+        open = this.open
 )
+
+fun Campaign.canBeClosed(): Boolean {
+        return items
+                .none { it.progress > 0 }
+}

@@ -3,6 +3,8 @@ package br.com.wb.salvaumavida.services
 import br.com.wb.salvaumavida.dto.CampaignDTO
 import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
+import br.com.wb.salvaumavida.entitiies.canBeClosed
+import br.com.wb.salvaumavida.exceptions.CantBeClosedException
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
 import br.com.wb.salvaumavida.utils.ifNotPresent
@@ -18,7 +20,7 @@ class CampaignService (
 ){
 
     fun findCampaign(id: Int, title: String = "", itemDescription: String = ""): Campaign {
-        return repository.findById(id).orElseThrow { RuntimeException("não encontrado") }
+        return repository.findById(id).orElseThrow { NotFoundException("Campanha não encontrada") }
     }
 
     fun findUserCampaigns(userId: Int, param: String): List<Campaign> {
@@ -75,5 +77,15 @@ class CampaignService (
         return repository
                 .findCampaignsByFilter(param)
                 .orElseThrow { NotFoundException("Nenhuma campanha encontrada") }
+    }
+
+    fun closeCampaign(campaignId: Int) {
+        val campaign = findCampaign(campaignId)
+        if (campaign.canBeClosed()) {
+            campaign.open = false
+            repository.save(campaign)
+        } else {
+            throw CantBeClosedException("Campanha não pode ser fechada.")
+        }
     }
 }
