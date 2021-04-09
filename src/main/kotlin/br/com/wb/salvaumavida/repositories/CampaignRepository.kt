@@ -12,9 +12,9 @@ interface CampaignRepository : JpaRepository<Campaign, Int>{
 
     @Query("select c from Campaign c " +
             "inner join CampaignItem ci on ci.campaign = c " +
-            "where upper(ci.description) like upper(concat('%',:param,'%'))" +
+            "where c.open is true and (upper(ci.description) like upper(concat('%',:param,'%'))" +
             " or upper(c.description) like upper(concat('%',:param,'%'))" +
-            " or upper(c.title) like upper(concat('%',:param,'%')) group by c")
+            " or upper(c.title) like upper(concat('%',:param,'%'))) group by c")
     fun findCampaignsByFilter(
             @Param("param") param: String
     ): Optional<List<Campaign>>
