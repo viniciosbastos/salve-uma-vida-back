@@ -1,6 +1,7 @@
 package br.com.wb.salvaumavida.resources
 
 import br.com.wb.salvaumavida.dto.CampaignDTO
+import br.com.wb.salvaumavida.dto.DonationDTO
 import br.com.wb.salvaumavida.entitiies.mapToDTO
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.models.Response
@@ -65,6 +66,16 @@ class CampaignResource (private val service: CampaignService){
     fun closeCampaign(@PathVariable id: Int): Response {
         return try {
             service.closeCampaign(id)
+            Response.Success("Campanha fechada")
+        } catch(ex: Exception) {
+            Response.Error(ex.message!!, "")
+        }
+    }
+
+    @PostMapping("/donation")
+    fun registerCampaignDonation(@RequestBody donation: DonationDTO): Response {
+        return try {
+            service.registerCampaignDonation(donation)
             Response.Success("sucesso")
         } catch(ex: Exception) {
             Response.Error(ex.message!!, "")

@@ -36,3 +36,4 @@ fun Campaign.canBeClosed(): Boolean {
         return items
                 .none { it.progress > 0 }
 }
+

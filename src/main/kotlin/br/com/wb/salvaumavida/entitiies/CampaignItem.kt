@@ -25,3 +25,7 @@ fun CampaignItem.mapToDTO(): CampaignItemDTO = CampaignItemDTO(
         progress = this.progress,
         unit = this.unit
 )
+
+fun CampaignItem.canReceiveDonation(donation: Int): Boolean {
+        return (this.goal - this.progress) >= donation
+}

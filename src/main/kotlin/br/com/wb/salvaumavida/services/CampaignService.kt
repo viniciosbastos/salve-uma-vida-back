@@ -1,15 +1,14 @@
 package br.com.wb.salvaumavida.services
 
 import br.com.wb.salvaumavida.dto.CampaignDTO
+import br.com.wb.salvaumavida.dto.DonationDTO
 import br.com.wb.salvaumavida.entitiies.Campaign
 import br.com.wb.salvaumavida.entitiies.CampaignItem
 import br.com.wb.salvaumavida.entitiies.canBeClosed
 import br.com.wb.salvaumavida.exceptions.CantBeClosedException
 import br.com.wb.salvaumavida.exceptions.NotFoundException
 import br.com.wb.salvaumavida.repositories.CampaignRepository
-import br.com.wb.salvaumavida.utils.ifNotPresent
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 import javax.transaction.Transactional
 
 @Service
@@ -87,5 +86,11 @@ class CampaignService (
         } else {
             throw CantBeClosedException("Campanha não pode ser fechada.")
         }
+    }
+
+    fun registerCampaignDonation(donation: DonationDTO) {
+        val campaignItem = campaignItemService.findById(donation.itemId)
+        campaignItem.progress += donation.donationQuantity
+        campaignItemService.save(campaignItem)
     }
 }
