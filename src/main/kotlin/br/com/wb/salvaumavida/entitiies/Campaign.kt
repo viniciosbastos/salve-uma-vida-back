@@ -17,6 +17,7 @@ data class Campaign (
         var description: String,
         @ManyToOne
         var user: User,
+        @Column(name = "open", columnDefinition = "boolean default true")
         var open: Boolean = true
 ){
 }
