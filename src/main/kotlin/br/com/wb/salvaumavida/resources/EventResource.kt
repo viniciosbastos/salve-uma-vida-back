@@ -65,4 +65,14 @@ class EventResource (
             Response.Error(exception.message!!, exception.cause.toString())
         }
     }
+
+    @GetMapping("/event/close/{id}")
+    fun closeEvent(@PathVariable id: Int): Response {
+        return try {
+            service.closeEvent(id)
+            Response.Success("Campanha fechada")
+        } catch(ex: Exception) {
+            Response.Error(ex.message!!, "")
+        }
+    }
 }

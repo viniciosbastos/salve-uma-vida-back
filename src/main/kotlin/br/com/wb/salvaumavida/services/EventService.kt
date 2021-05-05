@@ -69,4 +69,10 @@ class EventService (
                 .findAll()
                 .map { it.mapToLocationDTO() }
     }
+
+    fun closeEvent(id: Int) {
+        val event = find(id)
+        event.open = false
+        repository.save(event)
+    }
 }

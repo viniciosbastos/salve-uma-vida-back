@@ -12,7 +12,8 @@ data class EventDTO (
         var image: String,
         var description: String,
         var date: Date,
-        var userId: Int?
+        var userId: Int?,
+        var open: Boolean? = null
 ){
 }
 

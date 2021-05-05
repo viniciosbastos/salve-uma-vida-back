@@ -21,7 +21,8 @@ data class Event (
         var description: String,
         var date: Date,
         @ManyToOne
-        var user: User? = null
+        var user: User? = null,
+        var open: Boolean = true
 ){
 }
 
@@ -34,7 +35,8 @@ fun Event.mapToDTO(): EventDTO = EventDTO(
         image = this.image,
         description = this.description,
         date = this.date,
-        userId = user?.id
+        userId = user?.id,
+        open = this.open
 )
 
 fun Event.mapToLocationDTO(): LocationDTO = LocationDTO(

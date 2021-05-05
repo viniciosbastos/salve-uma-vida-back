@@ -9,7 +9,7 @@ import java.util.*
 
 interface EventRepository : JpaRepository<Event, Int> {
 
-    @Query("select e from Event e where upper(e.title) like upper(concat('%',:param,'%')) or upper(e.description) like upper(concat('%',:param,'%'))")
+    @Query("select e from Event e where e.open is true and (upper(e.title) like upper(concat('%',:param,'%')) or upper(e.description) like upper(concat('%',:param,'%')))")
     fun findEventsByFilter(@Param("param") param: String): Optional<List<Event>>
 
     @Query("select e from Event e where e.user.id= :userId and (upper(e.title) like upper(concat('%',:param,'%')) or upper(e.description) like upper(concat('%',:param,'%')))")
