@@ -62,7 +62,7 @@ class CampaignResource (private val service: CampaignService){
         return Response.Success("Campanha excluída.")
     }
 
-    @GetMapping("/campaign/close/{id}")
+    @PutMapping("/campaign/close/{id}")
     fun closeCampaign(@PathVariable id: Int): Response {
         return try {
             service.closeCampaign(id)

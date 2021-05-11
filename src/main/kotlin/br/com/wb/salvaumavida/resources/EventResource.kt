@@ -66,7 +66,7 @@ class EventResource (
         }
     }
 
-    @GetMapping("/event/close/{id}")
+    @PutMapping("/event/close/{id}")
     fun closeEvent(@PathVariable id: Int): Response {
         return try {
             service.closeEvent(id)
