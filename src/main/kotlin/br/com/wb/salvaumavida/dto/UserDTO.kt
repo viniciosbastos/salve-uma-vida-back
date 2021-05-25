@@ -4,6 +4,7 @@ import br.com.wb.salvaumavida.entitiies.User
 import br.com.wb.salvaumavida.entitiies.UserType
 
 data class UserDTO (
+        var id: Int?,
         var name: String,
         var email: String,
         var password: String,
